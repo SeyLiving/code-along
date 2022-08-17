@@ -1,22 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import TaskItems from "./TaskItems";
 // import { TrashIcon } from "@heroicons/react/outline"
 import TaskItem from "./TaskItems";
+import { v4 as uuid } from "uuid"
 
 function TaskManager() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    const tasks = localStorage.getItem("tasks");
+    if(!tasks) return[];
+    return JSON.parse(tasks);
+  });
+
   const [input, setInput] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input === "") return;
-    setTasks([input, ...tasks]);
+
+    const newTasks = {
+      id: uuid(),
+      text: input,
+      completed: true,
+    }
+
+    setTasks([newTasks, ...tasks]);
     setInput("");
   };
-  const handleDelete = (idx) => {
-    const newTasks = tasks.filter((task) => task !== idx);
+  const handleDelete = (id) => {
+    const newTasks = tasks.filter((task) => task.id !== id);
     setTasks(newTasks);
   };
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks])
 
   return (
     <div className="bg-blue-600 h-screen flex justify-center items-center">
@@ -40,7 +57,7 @@ function TaskManager() {
         </form>
         <div className="space-y-2 overflow-y-auto h-56">
           {tasks.map((task) =>{
-            return <TaskItem task={task} handleDelete={handleDelete} />
+            return <TaskItem key={task.id}task={task} handleDelete={handleDelete} />
           })
           }
           {/* <TaskItems/>

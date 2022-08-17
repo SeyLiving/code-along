@@ -18,8 +18,8 @@ function App(){
             <Button label="Read More" />
             <Image /> */}
             {/* <Practice/> */} 
-            {/* <TaskManager></TaskManager> */}
-            <Form></Form>
+            <TaskManager></TaskManager>
+            {/* <Form></Form> */}
         </div>
         
     )
