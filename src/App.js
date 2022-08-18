@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Practice from "./components/Practice"
 import TaskManager from "./components/TaskManager";
 import Form from "./components/Form";
+import ProductList from "./components/ProductList";
 
 function App(){
     return (
@@ -18,8 +19,9 @@ function App(){
             <Button label="Read More" />
             <Image /> */}
             {/* <Practice/> */} 
-            <TaskManager></TaskManager>
+            {/* <TaskManager></TaskManager> */}
             {/* <Form></Form> */}
+            <ProductList />
         </div>
         
     )
