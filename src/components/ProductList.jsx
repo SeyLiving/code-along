@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import Product from "./Product";
+import React from "react";
 import useAxios from "../hooks/useAxios";
+import Product from "./Product";
 import Spinner from "./Spinner";
 
 function ProductList() {
