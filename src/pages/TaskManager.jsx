@@ -3,15 +3,12 @@ import React, { useState, useEffect } from "react";
 // import { TrashIcon } from "@heroicons/react/outline"
 import TaskItem from "../components/TaskItems";
 import { v4 as uuid } from "uuid"
+import { useTaskContext } from "../context/tasksContext";
 
 function TaskManager() {
-  const [tasks, setTasks] = useState(() => {
-    const tasks = localStorage.getItem("tasks");
-    if(!tasks) return[];
-    return JSON.parse(tasks);
-  });
-
-  const [input, setInput] = useState("");
+  const {tasks, setValue} = useTaskContext();
+  const [input, setInput]= useState("");
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,12 +20,12 @@ function TaskManager() {
       completed: true,
     }
 
-    setTasks([newTasks, ...tasks]);
+    setValue([newTasks, ...tasks]);
     setInput("");
   };
   const handleDelete = (id) => {
     const newTasks = tasks.filter((task) => task.id !== id);
-    setTasks(newTasks);
+    setValue(newTasks);
   };
 
   useEffect(() => {
