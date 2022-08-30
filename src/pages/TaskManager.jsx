@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
 // import TaskItems from "./TaskItems";
 // import { TrashIcon } from "@heroicons/react/outline"
+import React, { useState, useEffect } from "react";
 import TaskItem from "../components/TaskItems";
 import { v4 as uuid } from "uuid"
 import { useTaskContext } from "../context/tasksContext";
@@ -17,15 +18,40 @@ function TaskManager() {
     const newTasks = {
       id: uuid(),
       text: input,
-      completed: true,
+      completed: false,
     }
 
     setValue([newTasks, ...tasks]);
     setInput("");
   };
+
   const handleDelete = (id) => {
     const newTasks = tasks.filter((task) => task.id !== id);
     setValue(newTasks);
+  };
+
+  const handleCompleted = (id) => {
+    const newTasks = tasks.map((task) => {
+      if (task.id === id) {
+          return {
+            ...task,
+            completed: !task.completed,
+          };
+      }
+      return task;
+    });
+    setValue(newTasks);
+  };
+
+  const handleEdit = (id) => {
+    const newTasks = tasks.filter((task) => {
+      if (task.id === id) {
+        setInput(task.text);
+        return false;
+      }
+      return task;
+    });
+    setValue(newTasks)
   };
 
   useEffect(() => {
@@ -54,7 +80,8 @@ function TaskManager() {
         </form>
         <div className="space-y-2 overflow-y-auto h-56">
           {tasks.map((task) =>{
-            return <TaskItem key={task.id}task={task} handleDelete={handleDelete} />
+            return <TaskItem key={task.id}task={task} handleDelete={handleDelete}
+            handleCompleted={handleCompleted} handleEdit={handleEdit} />
           })
           }
           {/* <TaskItems/>
